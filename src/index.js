@@ -2,9 +2,8 @@
  * @authors @rulon and @tolyayanot
  */
 
-import nacl from "tweetnacl";
-import {wordlists} from "./bip39_wordlists.js";
-
+const nacl = require("tweetnacl");
+const wordlists = require("./bip39_wordlists.js").wordlists;
 const defaultWordlist = wordlists.EN;
 
 /**
@@ -168,7 +167,7 @@ async function mnemonicToSeed(mnemonicArray, password = "") {
 /**
  * @param mnemonicArray    {string[]}
  * @param password? {string}
- * @return {Promise<{publicKey:Uint8Array, privateKey:Uint8Array}>} Key pair
+ * @return {Promise<{publicKey:Uint8Array, secretKey:Uint8Array}>} Key pair
  */
 async function mnemonicToKeyPair(mnemonicArray, password = "") {
     const seed = (await mnemonicToSeed(mnemonicArray, password));
@@ -205,4 +204,9 @@ async function generateMnemonic(wordsCount = 24, password = "", wordlist = defau
     return mnemonicArray;
 }
 
-export {generateMnemonic, mnemonicToSeed, mnemonicToKeyPair, validateMnemonic, isPasswordNeeded, wordlists};
+exports.generateMnemonic = generateMnemonic;
+exports.mnemonicToSeed = mnemonicToSeed;
+exports.mnemonicToKeyPair = mnemonicToKeyPair;
+exports.validateMnemonic = validateMnemonic;
+exports.isPasswordNeeded = isPasswordNeeded;
+exports.wordlists = wordlists;

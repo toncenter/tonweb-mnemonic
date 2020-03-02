@@ -29,4 +29,4 @@ const wordlists = {
  EN: EN
 }
 
-export {wordlists};
+exports.wordlists = wordlists;
