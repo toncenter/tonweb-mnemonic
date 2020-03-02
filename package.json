@@ -1,0 +1,29 @@
+{
+  "name": "ton.js-mnemonic",
+  "version": "0.0.1",
+  "description": "Mnemonic code for generating deterministic keys for TON (Telegram Open Network)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [
+    "TON",
+    "Telegram Open Network",
+    "Blockchain",
+    "Mnemonic"
+  ],
+  "author": "@rulon and @tolyayanot",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/toncenter/ton.js-mnemonic/issues"
+  },
+  "homepage": "https://github.com/toncenter/ton.js-mnemonic#readme",
+  "dependencies": {
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
