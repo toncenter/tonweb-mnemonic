@@ -204,6 +204,10 @@ async function generateMnemonic(wordsCount = 24, password = "", wordlist = defau
     return mnemonicArray;
 }
 
+if (window.TonWeb) {
+    window.TonWeb.mnemonic = {generateMnemonic, mnemonicToSeed, mnemonicToKeyPair, validateMnemonic, isPasswordNeeded, wordlists};
+}
+
 exports.generateMnemonic = generateMnemonic;
 exports.mnemonicToSeed = mnemonicToSeed;
 exports.mnemonicToKeyPair = mnemonicToKeyPair;

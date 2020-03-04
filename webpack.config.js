@@ -2,8 +2,11 @@ const path = require('path');
 
 module.exports = {
     entry: './src/index.js',
+    optimization: {
+        minimize: true,
+    },
     output: {
-        filename: 'ton.js-mnemonic.js',
+        filename: 'tonweb-mnemonic.js',
         path: path.resolve(__dirname, 'dist'),
     },
 };

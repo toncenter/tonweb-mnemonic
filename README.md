@@ -1,16 +1,32 @@
 # tonweb-mnemonic
 
+[![NPM](https://img.shields.io/npm/v/tonweb-mnemonic.svg)](https://www.npmjs.org/package/tonweb-mnemonic)
+
 Mnemonic code for generating deterministic keys for TON (Telegram Open Network).
 
 Library interface is similar to the library bitcoinjs/bip39 (mnemonic for Bitcoin).
 
 There is only one dependency: tweetnacl.
 
-This is browser library, NodeJS support will be soon.
+This is browser library, nodejs is not supported yet.
+
+## Contributing
+
+We will be glad to contributing: in particular, tests and nodejs support is needed.
 
 ## Install
 
 `npm install tonweb-mnemonic`
+
+## Old-school Install
+
+`<script src="libs/tonweb.js"></script>`
+
+`<script src="libs/tonweb-mnemonic.js"></script>`
+
+tonMnemonic is set to window.TonWeb object if it exists.
+
+`const tonMnemonic = window.TonWeb.mnemonic`
 
 ## Example
 
