@@ -2,7 +2,7 @@
 
 [![NPM](https://img.shields.io/npm/v/tonweb-mnemonic.svg)](https://www.npmjs.org/package/tonweb-mnemonic)
 
-Mnemonic code for generating deterministic keys for TON (Telegram Open Network).
+Mnemonic code for generating deterministic keys for TON blockchain.
 
 Library interface is similar to the library bitcoinjs/bip39 (mnemonic for Bitcoin).
 
@@ -74,4 +74,4 @@ function toHexString(byteArray) {
 
 ## Authors
 
-@rulon and @tolyayanot
+rulon and tolya-yanot
