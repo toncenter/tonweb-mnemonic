@@ -58,10 +58,13 @@ module.exports = function configureWebpack(env) {
             libraryTarget: 'commonjs2',
             path: path.resolve(__dirname, 'dist/node'),
         },
+        externalsPresets: {
+            node: true,
+        },
+        externals: [nodeExternals()],
         optimization: {
             minimize: false,
         },
-        externals: [nodeExternals()],
     });
 
     // Returning multiple configs
