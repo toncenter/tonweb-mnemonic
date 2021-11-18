@@ -6,6 +6,9 @@ const nacl = require("tweetnacl");
 const wordlists = require("./bip39_wordlists.js").wordlists;
 const defaultWordlist = wordlists.EN;
 
+const crypto = require("./crypto/crypto-node");
+
+
 /**
  * @private
  * @param str {string}
@@ -58,7 +61,7 @@ async function hmac_sha512(phrase, password) {
     const phraseBuffer = stringToArray(phrase).buffer;
     const passwordBuffer = password.length ? stringToArray(password).buffer : new ArrayBuffer(0);
     const hmacAlgo = {name: "HMAC", hash: "SHA-512"};
-    const hmacKey = await window.crypto.subtle.importKey(
+    const hmacKey = await crypto.subtle.importKey(
         "raw",
         phraseBuffer,
         hmacAlgo,
@@ -77,14 +80,14 @@ async function hmac_sha512(phrase, password) {
  */
 async function pbkdf2_sha512(key, salt, iterations) {
     const saltBuffer = stringToArray(salt).buffer;
-    const pbkdf2_key = await window.crypto.subtle.importKey(
+    const pbkdf2_key = await crypto.subtle.importKey(
         "raw",
         key,
         {name: "PBKDF2"},
         false,
         ["deriveBits"]
     );
-    const derivedBits = await window.crypto.subtle.deriveBits(
+    const derivedBits = await crypto.subtle.deriveBits(
         {name: "PBKDF2", hash: "SHA-512", salt: saltBuffer, iterations: iterations},
         pbkdf2_key,
         512
@@ -187,7 +190,7 @@ async function generateMnemonic(wordsCount = 24, password = "", wordlist = defau
     while (true) {
         c += 1;
         mnemonicArray = [];
-        const rnd = window.crypto.getRandomValues(new Uint16Array(wordsCount));
+        const rnd = crypto.getRandomValues(new Uint16Array(wordsCount));
         for (let i = 0; i < wordsCount; i++) {
             mnemonicArray.push(wordlist[rnd[i] & 2047]); // We loose 5 out of 16 bits of entropy here, good enough
         }
@@ -204,13 +207,11 @@ async function generateMnemonic(wordsCount = 24, password = "", wordlist = defau
     return mnemonicArray;
 }
 
-if (window.TonWeb) {
-    window.TonWeb.mnemonic = {generateMnemonic, mnemonicToSeed, mnemonicToKeyPair, validateMnemonic, isPasswordNeeded, wordlists};
-}
-
-exports.generateMnemonic = generateMnemonic;
-exports.mnemonicToSeed = mnemonicToSeed;
-exports.mnemonicToKeyPair = mnemonicToKeyPair;
-exports.validateMnemonic = validateMnemonic;
-exports.isPasswordNeeded = isPasswordNeeded;
-exports.wordlists = wordlists;
+module.exports = {
+    generateMnemonic,
+    mnemonicToSeed,
+    mnemonicToKeyPair,
+    validateMnemonic,
+    isPasswordNeeded,
+    wordlists,
+};

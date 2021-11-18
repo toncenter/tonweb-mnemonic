@@ -1,4 +1,5 @@
-.idea/
-.DS_Store
-node_modules
+/.idea/
+/dist/
+/node_modules/
 *.iml
+.DS_Store
