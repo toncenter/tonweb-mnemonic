@@ -6,14 +6,14 @@ const { merge } = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 
 
-module.exports = function configureWebpack(env, argv) {
+module.exports = function configureWebpack(env) {
 
     // Getting Webpack CLI args, or falling back to defaults
     const {
         target = 'node',
         mode = (process.env.NODE_ENV || 'development'),
 
-    } = argv;
+    } = env;
 
     /**
      * Basic config suitable for Node.js.
