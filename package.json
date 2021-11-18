@@ -5,10 +5,10 @@
   "main": "dist/node",
   "browser": "dist/web",
   "scripts": {
-    "build": "rm -rf ./dist && run-p build:web build:node",
+    "build": "rm -rf ./dist && webpack build",
     "build:ci": "NODE_ENV=production npm run build",
-    "build:node": "webpack --env target=node",
-    "build:web": "webpack --env target=web",
+    "build:node": "webpack build --config-name node",
+    "build:web": "webpack build --config-name web",
     "prepublishOnly": "npm run build:ci",
     "test:manual": "browser-sync start --server --index ./test/index.html --files ./dist"
   },

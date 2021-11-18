@@ -10,70 +10,65 @@ module.exports = function configureWebpack(env) {
 
     // Getting Webpack CLI args, or falling back to defaults
     const {
-        target = 'node',
         mode = (process.env.NODE_ENV || 'development'),
 
     } = env;
 
-    /**
-     * Basic config suitable for Node.js.
-     */
-    let config = {
+    const baseConfig = {
         mode,
         entry: './src/index.js',
         devtool: 'source-map',
-        target,
         output: {
             filename: 'index.js',
-            path: path.resolve(__dirname, `dist/${target}`),
-            libraryTarget: 'commonjs2',
+
         },
-        plugins: [],
     };
 
     /**
      * Browser-specific config.
      */
-    if (target === 'web') {
-        config = merge(config, {
-            output: {
-                libraryTarget: 'umd',
-                library: {
-                    root: ['TonWeb', 'mnemonic'],
-                    amd: 'tonweb-mnemonic',
-                    commonjs: 'tonweb-mnemonic'
-                },
+    const webConfig = merge(baseConfig, {
+        name: 'web',
+        target: 'web',
+        output: {
+            libraryTarget: 'umd',
+            library: {
+                root: ['TonWeb', 'mnemonic'],
+                amd: 'tonweb-mnemonic',
+                commonjs: 'tonweb-mnemonic'
             },
-            plugins: [
-                // Using native "webcrypto" utilities
-                new NormalModuleReplacementPlugin(
-                    /crypto\/crypto-node/,
-                    path.resolve(__dirname, 'src/crypto/crypto-web.js')
-                )
-            ],
-        });
-    }
+            path: path.resolve(__dirname, 'dist/web'),
+        },
+        plugins: [
+            // Using native "webcrypto" utilities
+            new NormalModuleReplacementPlugin(
+                /crypto\/crypto-node/,
+                path.resolve(__dirname, 'src/crypto/crypto-web.js')
+            )
+        ],
+    });
 
     /**
      * Node-specific config.
      */
-    if (target === 'node') {
+    const nodeConfig = merge(baseConfig, {
+        name: 'node',
+        target: 'node',
+        output: {
+            libraryTarget: 'commonjs2',
+            path: path.resolve(__dirname, 'dist/node'),
+        },
+        optimization: {
+            minimize: false,
+        },
+        externals: [nodeExternals()],
+    });
 
-        config = merge(config, {
-            externals: [nodeExternals()],
-        });
-
-        if (mode === 'production') {
-            // No need to minify for Node.js
-            config = merge(config, {
-                optimization: {
-                    minimize: false,
-                },
-            });
-        }
-
-    }
-
-    return config;
+    // Returning multiple configs
+    // for parallel builds
+    return [
+        nodeConfig,
+        webConfig,
+    ];
 
 }
