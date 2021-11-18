@@ -20,7 +20,6 @@ module.exports = function configureWebpack(env) {
         devtool: 'source-map',
         output: {
             filename: 'index.js',
-
         },
     };
 
@@ -31,11 +30,13 @@ module.exports = function configureWebpack(env) {
         name: 'web',
         target: 'web',
         output: {
-            libraryTarget: 'umd',
             library: {
-                root: ['TonWeb', 'mnemonic'],
-                amd: 'tonweb-mnemonic',
-                commonjs: 'tonweb-mnemonic'
+                type: 'umd',
+                name: {
+                    root: ['TonWeb', 'mnemonic'],
+                    amd: 'tonweb-mnemonic',
+                    commonjs: 'tonweb-mnemonic',
+                },
             },
             path: path.resolve(__dirname, 'dist/web'),
         },
@@ -55,7 +56,9 @@ module.exports = function configureWebpack(env) {
         name: 'node',
         target: 'node',
         output: {
-            libraryTarget: 'commonjs2',
+            library: {
+              type: 'commonjs2',
+            },
             path: path.resolve(__dirname, 'dist/node'),
         },
         externalsPresets: {
