@@ -21,17 +21,17 @@
   ],
   "contributors": [
     {
-      "name" : "rulon",
-      "url" : "https://github.com/rulon"
+      "name": "rulon",
+      "url": "https://github.com/rulon"
     },
     {
-      "name" : "tolyayanot",
-      "url" : "https://github.com/tolya-yanot"
+      "name": "tolyayanot",
+      "url": "https://github.com/tolya-yanot"
     },
     {
-      "name" : "Slava Fomin II",
-      "email" : "slava@fomin.io",
-      "url" : "https://github.com/slavafomin"
+      "name": "Slava Fomin II",
+      "email": "slava@fomin.io",
+      "url": "https://github.com/slavafomin"
     }
   ],
   "license": "GPL-3.0",

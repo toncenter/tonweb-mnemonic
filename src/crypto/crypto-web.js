@@ -1,3 +1,3 @@
 
 // Only supported in browsers
-module.exports = window.crypto;
+export default window.crypto;

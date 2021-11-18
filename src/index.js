@@ -1,12 +1,12 @@
-/**
- * @authors @rulon and @tolyayanot
- */
 
-const nacl = require("tweetnacl");
-const wordlists = require("./bip39_wordlists.js").wordlists;
-const defaultWordlist = wordlists.EN;
+import nacl from 'tweetnacl';
 
-const crypto = require("./crypto/crypto-node");
+import * as wordlists from './bip39-wordlists';
+
+import crypto from './crypto/crypto-node';
+
+
+const defaultWordlist = wordlists.english;
 
 
 /**
@@ -207,7 +207,8 @@ async function generateMnemonic(wordsCount = 24, password = "", wordlist = defau
     return mnemonicArray;
 }
 
-module.exports = {
+
+export {
     generateMnemonic,
     mnemonicToSeed,
     mnemonicToKeyPair,
