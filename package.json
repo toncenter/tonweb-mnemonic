@@ -42,6 +42,9 @@
   "engines": {
     "node": ">=15"
   },
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "tweetnacl": "^1.0.3"
   },
