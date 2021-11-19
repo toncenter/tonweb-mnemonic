@@ -2,11 +2,7 @@
 import { isBasicSeed, isPasswordSeed, mnemonicToEntropy } from './common';
 
 
-/**
- * @param mnemonicArray    {string[]}
- * @return {Promise<boolean>}
- */
-export async function isPasswordNeeded(mnemonicArray) {
+export async function isPasswordNeeded(mnemonicArray: string[]): Promise<boolean> {
   // password mnemonic (without password) should be password seed, but not basic seed
   const entropy = await mnemonicToEntropy(mnemonicArray, '');
   return (
