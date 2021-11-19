@@ -12,6 +12,7 @@ Mnemonic code for generating deterministic keys for TON blockchain.
   (mnemonic for Bitcoin),
 - there is only one dependency: `tweetnacl`,
 - supports both Browser (UMD) and Node.js (>=15, CommonJS)
+- written in TypeScript and provides typing declarations
 
 
 ## Install
@@ -19,7 +20,7 @@ Mnemonic code for generating deterministic keys for TON blockchain.
 `npm install --save tonweb-mnemonic`
 
 
-## Old-school Install
+## Usage in browser
 
 ```html
 <script src="https://unpkg.com/tonweb/dist/web/index.js"></script>
@@ -32,7 +33,7 @@ Mnemonic code for generating deterministic keys for TON blockchain.
 ```
 
 
-## Example
+## Usage in Node.js
 
 ```js
 import tonMnemonic from "tonweb-mnemonic";
