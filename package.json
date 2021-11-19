@@ -4,10 +4,12 @@
   "description": "Mnemonic code for generating deterministic keys for TON (Telegram Open Network)",
   "main": "dist/node",
   "browser": "dist/web",
+  "types": "dist/types",
   "scripts": {
-    "build": "rm -rf ./dist && webpack build",
+    "build": "rm -rf ./dist && webpack build && npm run build:types",
     "build:ci": "NODE_ENV=production npm run build",
     "build:node": "webpack build --config-name node",
+    "build:types": "tsc -p ./tsconfig.lib.json",
     "build:web": "webpack build --config-name web",
     "prepublishOnly": "npm run build:ci",
     "test:manual": "browser-sync start --server --index ./test/index.html --files ./dist"
@@ -49,8 +51,17 @@
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/node": "^16.11.8",
+    "@types/webpack": "^5.28.0",
+    "babel-loader": "^8.2.3",
     "browser-sync": "^2.27.7",
+    "fork-ts-checker-webpack-plugin": "^6.4.0",
     "npm-run-all": "^4.1.5",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2",
     "webpack": "^5.64.1",
     "webpack-cli": "^4.9.1",
     "webpack-merge": "^5.8.0",

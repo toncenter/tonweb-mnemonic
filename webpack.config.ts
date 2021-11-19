@@ -1,12 +1,13 @@
 
 const path = require('path');
 
-const { NormalModuleReplacementPlugin } = require('webpack');
-const { merge } = require('webpack-merge');
-const nodeExternals = require('webpack-node-externals');
+import { NormalModuleReplacementPlugin, Configuration as WebpackConfig } from 'webpack';
+import { merge } from 'webpack-merge';
+import nodeExternals from 'webpack-node-externals';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 
-module.exports = function configureWebpack(env) {
+export default function configureWebpack(env): WebpackConfig[] {
 
     // Getting Webpack CLI args, or falling back to defaults
     const {
@@ -14,19 +15,44 @@ module.exports = function configureWebpack(env) {
 
     } = env;
 
-    const baseConfig = {
+    const baseConfig = <WebpackConfig> {
         mode,
-        entry: './src/index.js',
+        entry: './src/index.ts',
         devtool: 'source-map',
         output: {
             filename: 'index.js',
         },
+        resolve: {
+            extensions: ['.ts'],
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.ts$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-typescript'],
+                            plugins: ['@babel/plugin-transform-runtime']
+                        }
+                    },
+                },
+            ],
+        },
+        plugins: [
+            new ForkTsCheckerWebpackPlugin({
+                typescript: {
+                    configFile: path.resolve(__dirname, 'tsconfig.lib.json'),
+                },
+            }),
+        ]
     };
 
     /**
      * Browser-specific config.
      */
-    const webConfig = merge(baseConfig, {
+    const webConfig = merge(baseConfig, <WebpackConfig> {
         name: 'web',
         target: 'web',
         output: {
@@ -44,7 +70,7 @@ module.exports = function configureWebpack(env) {
             // Using native "webcrypto" utilities
             new NormalModuleReplacementPlugin(
                 /crypto\/crypto-node/,
-                path.resolve(__dirname, 'src/crypto/crypto-web.js')
+                path.resolve(__dirname, 'src/crypto/crypto-web.ts')
             )
         ],
     });
@@ -52,7 +78,7 @@ module.exports = function configureWebpack(env) {
     /**
      * Node-specific config.
      */
-    const nodeConfig = merge(baseConfig, {
+    const nodeConfig = merge(baseConfig, <WebpackConfig> {
         name: 'node',
         target: 'node',
         output: {
