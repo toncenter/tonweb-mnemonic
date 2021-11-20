@@ -79,8 +79,10 @@ We will gladly accept any useful contributions.
 
 ### TO DO:
 
-- add tests
 - consider adding support for older Node.js versions (i.e. <= 14)
+- write tests for all functions (improve tests coverage)
+- implement tests execution on all OSes in Node
+- implement tests execution in Browser (i.e. headless Chrome)
 
 
 ### Development guide
