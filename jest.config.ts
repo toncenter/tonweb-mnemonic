@@ -6,6 +6,12 @@ export default <Config.InitialOptions>{
   preset: 'ts-jest',
   testEnvironment: 'node',
   verbose: true,
+  reporters: [
+    'default',
+    ['jest-junit', {
+      outputDirectory: '<rootDir>/test-reports/',
+    }],
+  ],
   roots: [
     '<rootDir>/src/',
   ],
