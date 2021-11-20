@@ -42,7 +42,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: Test report (dorny)
+          name: Test report [${{ matrix.os }}, ${{ matrix.node_version }}] (dorny)
           path: test-reports/junit.xml
           reporter: jest-junit
 
@@ -51,7 +51,7 @@ jobs:
         if: always()
         with:
           files: test-reports/junit.xml
-          check_name: Test report (EnricoMi)
+          check_name: Test report [${{ matrix.os }}, ${{ matrix.node_version }}] (EnricoMi)
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
