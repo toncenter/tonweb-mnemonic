@@ -1,10 +1,6 @@
 
-describe('generateMnemonic', () => {
+describe('generateMnemonic()', () => {
 
-  it('should work', () => {
-
-    expect(true).toEqual(true);
-
-  });
+  it.todo('should work');
 
 });

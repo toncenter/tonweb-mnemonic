@@ -5,49 +5,26 @@ import crypto from '../crypto/crypto-node';
 export const PBKDF_ITERATIONS = 100000;
 
 
-/**
- * @private
- * @param entropy   {ArrayBuffer}
- * @return {Promise<boolean>}
- */
-export async function isBasicSeed(entropy) {
+export async function isBasicSeed(entropy: ArrayBuffer): Promise<boolean> {
   const seed = await pbkdf2Sha512(entropy, 'TON seed version', Math.max(1, Math.floor(PBKDF_ITERATIONS / 256)));
   return seed[0] == 0;
 }
 
 
-/**
- * @private
- * @param entropy   {ArrayBuffer}
- * @return {Promise<boolean>}
- */
-export async function isPasswordSeed(entropy) {
+export async function isPasswordSeed(entropy: ArrayBuffer): Promise<boolean> {
   const seed = await pbkdf2Sha512(entropy, 'TON fast seed version', 1);
   return seed[0] == 1;
 }
 
 
-/**
- * @private
- * @param mnemonicArray    {string[]}
- * @param password? {string}
- * @return {Promise<ArrayBuffer>}
- */
-export async function mnemonicToEntropy(mnemonicArray, password = '') {
+export async function mnemonicToEntropy(mnemonicArray: string[], password = ''): Promise<ArrayBuffer> {
   const mnemonicPhrase = mnemonicArray.join(' ');
   return await hmacSha512(mnemonicPhrase, password);
 }
 
 
-/**
- * @private
- * @param key   {ArrayBuffer}
- * @param salt  {string}
- * @param iterations    {number}
- * @return {Promise<Uint8Array>}
- */
-export async function pbkdf2Sha512(key, salt, iterations) {
-  const saltBuffer = stringToArray(salt).buffer;
+export async function pbkdf2Sha512(key: ArrayBuffer, salt: string, iterations: number): Promise<Uint8Array> {
+  const saltBuffer = stringToIntArray(salt).buffer;
   const pbkdf2_key = await crypto.subtle.importKey(
     'raw',
     key,
@@ -64,15 +41,9 @@ export async function pbkdf2Sha512(key, salt, iterations) {
 }
 
 
-async function hmacSha512(phrase, password) {
-  /**
-   * @private
-   * @param phrase  {string}
-   * @param password  {string}
-   * @return {Promise<ArrayBuffer>}
-   */
-  const phraseBuffer = stringToArray(phrase).buffer;
-  const passwordBuffer = password.length ? stringToArray(password).buffer : new ArrayBuffer(0);
+export async function hmacSha512(phrase: string, password: string): Promise<ArrayBuffer> {
+  const phraseBuffer = stringToIntArray(phrase).buffer;
+  const passwordBuffer = password.length ? stringToIntArray(password).buffer : new ArrayBuffer(0);
   const hmacAlgo = {name: 'HMAC', hash: 'SHA-512'};
   const hmacKey = await crypto.subtle.importKey(
     'raw',
@@ -85,30 +56,32 @@ async function hmacSha512(phrase, password) {
 }
 
 
-/**
- * @private
- * @param str {string}
- * @param size?  {number}
- * @return {Uint8Array}
- */
-function stringToArray(str, size = 1) {
-  let buf;
-  let bufView;
+export function stringToIntArray(string: string, size = 1): Uint8Array {
 
-  if (size === 1) {
-    buf = new ArrayBuffer(str.length);
-    bufView = new Uint8Array(buf);
+  let buffer;
+  let bufferView;
+
+  switch (size) {
+    case 1:
+      buffer = new ArrayBuffer(string.length);
+      bufferView = new Uint8Array(buffer);
+      break;
+    case 2:
+      buffer = new ArrayBuffer(string.length * 2);
+      bufferView = new Uint16Array(buffer);
+      break;
+    case 4:
+      buffer = new ArrayBuffer(string.length * 4);
+      bufferView = new Uint32Array(buffer);
+      break;
+    default:
+      throw new Error(`Incorrect size specified: ${size}`);
   }
-  if (size === 2) {
-    buf = new ArrayBuffer(str.length * 2);
-    bufView = new Uint16Array(buf);
+
+  for (let i = 0, strLen = string.length; i < strLen; i++) {
+    bufferView[i] = string.charCodeAt(i);
   }
-  if (size === 4) {
-    buf = new ArrayBuffer(str.length * 4);
-    bufView = new Uint32Array(buf);
-  }
-  for (let i = 0, strLen = str.length; i < strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
-  return new Uint8Array(bufView.buffer);
+
+  return new Uint8Array(bufferView.buffer);
+
 }
