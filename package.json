@@ -1,7 +1,7 @@
 {
   "name": "tonweb-mnemonic",
-  "version": "0.0.2",
-  "description": "Mnemonic code for generating deterministic keys for TON (Telegram Open Network)",
+  "version": "1.0.0",
+  "description": "Mnemonic code for generating deterministic keys for TON (The Open Network)",
   "main": "dist/node",
   "browser": "dist/web",
   "types": "dist/types",
@@ -21,12 +21,12 @@
     "Blockchain",
     "Mnemonic",
     "TON",
-    "Telegram Open Network"
+    "The Open Network"
   ],
   "contributors": [
     {
       "name": "rulon",
-      "url": "https://github.com/rulon"
+      "url": "https://github.com/EmelyanenkoK"
     },
     {
       "name": "tolyayanot",
