@@ -1,37 +1,42 @@
+
 # tonweb-mnemonic
 
 [![NPM](https://img.shields.io/npm/v/tonweb-mnemonic.svg)](https://www.npmjs.org/package/tonweb-mnemonic)
 
 Mnemonic code for generating deterministic keys for TON blockchain.
 
-Library interface is similar to the library bitcoinjs/bip39 (mnemonic for Bitcoin).
 
-There is only one dependency: tweetnacl.
+## Features
 
-This is browser library, nodejs is not supported yet.
+- library interface is similar to the library `bitcoinjs/bip39`
+  (mnemonic for Bitcoin),
+- there is only one dependency: `tweetnacl`,
+- supports both Browser (UMD) and Node.js (>=15, CommonJS)
+- written in TypeScript and provides typing declarations
 
-## Contributing
-
-We will be glad to contributing: in particular, tests and nodejs support is needed.
 
 ## Install
 
-`npm install tonweb-mnemonic`
+`npm install --save tonweb-mnemonic`
 
-## Old-school Install
 
-`<script src="libs/tonweb.js"></script>`
+## Usage in browser
 
-`<script src="libs/tonweb-mnemonic.js"></script>`
+```html
+<script src="https://unpkg.com/tonweb/dist/web/index.js"></script>
+<script src="https://unpkg.com/tonweb-mnemonic@0.0.2/dist/tonweb-mnemonic.js"></script>
 
-tonMnemonic is set to window.TonWeb object if it exists.
-
-`const tonMnemonic = window.TonWeb.mnemonic`
-
-## Example
-
+<script type="application/javascript">
+    // TonWebMnemonic is set to window.TonWeb object if it exists:
+    const tonMnemonic = window.TonWeb.mnemonic;    
+</script>
 ```
-import tonMnemonic from "tonweb-mnemonic"
+
+
+## Usage in Node.js
+
+```js
+import tonMnemonic from "tonweb-mnemonic";
 
 async function example() {
     tonMnemonic.wordlists.EN;
@@ -66,12 +71,33 @@ function toHexString(byteArray) {
 }
 ```
 
-## Build
 
-`npm install`
+## Contributing
 
-`npx webpack --mode=none`
+We will gladly accept any useful contributions.
 
-## Authors
 
-rulon and tolya-yanot
+### TO DO:
+
+- consider adding support for older Node.js versions (i.e. <= 14)
+- write tests for all functions (improve tests coverage)
+- implement tests execution on all OSes in Node
+- implement tests execution in Browser (i.e. headless Chrome)
+
+
+### Development guide
+
+`npm install` — to install dependencies
+
+`npm run build` — to make a *development* build
+
+`npm run build:ci` — to make a *production* build
+
+`npm run test:manual` — to run manual tests in the browser
+
+
+## Contributors
+
+- [rulon](https://github.com/rulon)
+- [tolya-yanot](https://github.com/tolya-yanot)
+- [Slava Fomin II](https://github.com/slavafomin)

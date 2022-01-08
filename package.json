@@ -2,28 +2,75 @@
   "name": "tonweb-mnemonic",
   "version": "0.0.2",
   "description": "Mnemonic code for generating deterministic keys for TON (Telegram Open Network)",
-  "main": "src/index.js",
+  "main": "dist/node",
+  "browser": "dist/web",
+  "types": "dist/types",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "rm -rf ./dist && webpack build && npm run build:types",
+    "build:ci": "NODE_ENV=production npm run build",
+    "build:node": "webpack build --config-name node",
+    "build:types": "tsc -p ./tsconfig.lib.json",
+    "build:web": "webpack build --config-name web",
+    "prepublishOnly": "npm run build:ci",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:manual": "browser-sync start --server --index ./test/index.html --files ./dist"
   },
   "keywords": [
-    "TON",
-    "Telegram Open Network",
+    "BIP39",
     "Blockchain",
-    "Mnemonic"
+    "Mnemonic",
+    "TON",
+    "Telegram Open Network"
   ],
-  "author": "@rulon and @tolyayanot",
+  "contributors": [
+    {
+      "name": "rulon",
+      "url": "https://github.com/rulon"
+    },
+    {
+      "name": "tolyayanot",
+      "url": "https://github.com/tolya-yanot"
+    },
+    {
+      "name": "Slava Fomin II",
+      "email": "slava@fomin.io",
+      "url": "https://github.com/slavafomin"
+    }
+  ],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/toncenter/tonweb-mnemonic/issues"
   },
   "homepage": "https://github.com/toncenter/tonweb-mnemonic#readme",
+  "engines": {
+    "node": ">=15"
+  },
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.8",
+    "@types/webpack": "^5.28.0",
+    "babel-loader": "^8.2.3",
+    "browser-sync": "^2.27.7",
+    "fork-ts-checker-webpack-plugin": "^6.4.0",
+    "jest": "^27.3.1",
+    "jest-junit": "^13.0.0",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-merge": "^5.8.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
