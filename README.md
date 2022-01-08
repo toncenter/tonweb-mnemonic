@@ -23,11 +23,11 @@ Mnemonic code for generating deterministic keys for TON blockchain.
 ## Usage in browser
 
 ```html
-<script src="https://unpkg.com/tonweb/dist/web/index.js"></script>
-<script src="https://unpkg.com/tonweb-mnemonic@0.0.2/dist/tonweb-mnemonic.js"></script>
+`<script src="libs/tonweb.js"></script>`
+`<script src="libs/tonweb-mnemonic.js"></script>`
 
 <script type="application/javascript">
-    // TonWebMnemonic is set to window.TonWeb object if it exists:
+    // mnemonic is set to window.TonWeb object if it exists:
     const tonMnemonic = window.TonWeb.mnemonic;    
 </script>
 ```
@@ -79,7 +79,6 @@ We will gladly accept any useful contributions.
 
 ### TO DO:
 
-- consider adding support for older Node.js versions (i.e. <= 14)
 - write tests for all functions (improve tests coverage)
 - implement tests execution on all OSes in Node
 - implement tests execution in Browser (i.e. headless Chrome)

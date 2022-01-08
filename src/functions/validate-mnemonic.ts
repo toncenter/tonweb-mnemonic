@@ -6,19 +6,19 @@ import { isPasswordNeeded } from './is-password-needed';
 
 export async function validateMnemonic(
   mnemonicArray: string[],
-  password = '',
-  wordlist = defaultWordlist
+  password: string = '',
+  wordlist: string[] = defaultWordlist
 
 ): Promise<boolean> {
 
   for (let word of mnemonicArray) {
-    if (wordlist.indexOf(word) < 0) {
+    if (wordlist.indexOf(word) === -1) {
       return false;
     }
   }
 
   if (password.length > 0) {
-    if (!await isPasswordNeeded(mnemonicArray)) {
+    if (!(await isPasswordNeeded(mnemonicArray))) {
       return false;
     }
   }

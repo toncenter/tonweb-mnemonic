@@ -6,9 +6,9 @@ import { isPasswordNeeded } from './is-password-needed';
 
 
 export async function generateMnemonic(
-  wordsCount = 24,
-  password = '',
-  wordlist = defaultWordlist
+  wordsCount: number = 24,
+  password: string = '',
+  wordlist: string[] = defaultWordlist
 
 ): Promise<string[]> {
 

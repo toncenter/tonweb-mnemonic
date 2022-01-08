@@ -10,7 +10,7 @@ export interface KeyPair {
 }
 
 
-export async function mnemonicToKeyPair(mnemonicArray: string[], password = ''): Promise<KeyPair> {
-  const seed = (await mnemonicToSeed(mnemonicArray, password));
+export async function mnemonicToKeyPair(mnemonicArray: string[], password: string = ''): Promise<KeyPair> {
+  const seed = await mnemonicToSeed(mnemonicArray, password);
   return nacl.sign.keyPair.fromSeed(seed);
 }

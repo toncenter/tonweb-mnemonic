@@ -17,7 +17,7 @@ export async function isPasswordSeed(entropy: ArrayBuffer): Promise<boolean> {
 }
 
 
-export async function mnemonicToEntropy(mnemonicArray: string[], password = ''): Promise<ArrayBuffer> {
+export async function mnemonicToEntropy(mnemonicArray: string[], password: string = ''): Promise<ArrayBuffer> {
   const mnemonicPhrase = mnemonicArray.join(' ');
   return await hmacSha512(mnemonicPhrase, password);
 }
@@ -56,30 +56,30 @@ export async function hmacSha512(phrase: string, password: string): Promise<Arra
 }
 
 
-export function stringToIntArray(string: string, size = 1): Uint8Array {
+export function stringToIntArray(str: string, size: number = 1): Uint8Array {
 
   let buffer;
   let bufferView;
 
   switch (size) {
     case 1:
-      buffer = new ArrayBuffer(string.length);
+      buffer = new ArrayBuffer(str.length);
       bufferView = new Uint8Array(buffer);
       break;
     case 2:
-      buffer = new ArrayBuffer(string.length * 2);
+      buffer = new ArrayBuffer(str.length * 2);
       bufferView = new Uint16Array(buffer);
       break;
     case 4:
-      buffer = new ArrayBuffer(string.length * 4);
+      buffer = new ArrayBuffer(str.length * 4);
       bufferView = new Uint32Array(buffer);
       break;
     default:
       throw new Error(`Incorrect size specified: ${size}`);
   }
 
-  for (let i = 0, strLen = string.length; i < strLen; i++) {
-    bufferView[i] = string.charCodeAt(i);
+  for (let i = 0, strLen = str.length; i < strLen; i++) {
+    bufferView[i] = str.charCodeAt(i);
   }
 
   return new Uint8Array(bufferView.buffer);

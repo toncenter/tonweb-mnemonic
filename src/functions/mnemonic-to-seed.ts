@@ -4,7 +4,7 @@ import { mnemonicToEntropy, pbkdf2Sha512, PBKDF_ITERATIONS } from './common';
 
 export async function mnemonicToSeed(
   mnemonicArray: string[],
-  password = ''
+  password: string = ''
 
 ): Promise<Uint8Array> {
 
