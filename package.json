@@ -1,6 +1,6 @@
 {
   "name": "tonweb-mnemonic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mnemonic code for generating deterministic keys for TON (The Open Network)",
   "main": "dist/node",
   "browser": "dist/web",

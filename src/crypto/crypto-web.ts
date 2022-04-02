@@ -1,3 +1,3 @@
 
 // Only supported in browsers
-export default window.crypto;
+export default self.crypto;
