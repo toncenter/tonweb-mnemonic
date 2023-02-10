@@ -1,7 +1,7 @@
 
 import crypto from '../crypto/crypto-node';
 import { default as defaultWordlist } from '../bip39-wordlists';
-import { isBasicSeed, mnemonicToEntropy } from './common';
+import { isBasicSeed, isPasswordSeed, mnemonicToEntropy } from './common';
 import { isPasswordNeeded } from './is-password-needed';
 
 
@@ -26,7 +26,10 @@ export async function generateMnemonic(
       if (!await isPasswordNeeded(mnemonicArray))
         continue;
     }
-    if (!(await isBasicSeed(await mnemonicToEntropy(mnemonicArray, password)))) {
+    const entropy = await mnemonicToEntropy(mnemonicArray, password)
+    const isBasicSeedPromise = isBasicSeed(entropy)
+    const isPasswordSeedPromise = isPasswordSeed(entropy)
+    if (!(await isBasicSeedPromise) || (await isPasswordSeedPromise)) {
       continue;
     }
     break;
